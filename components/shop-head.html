@@ -1,0 +1,14 @@
+<v-cptborder ref="container" :model="model" :setting="settingConfig" :editing="editingConfig" :drag="drag">
+    <div class="goods-head" style="height: 100%"
+         :style="{'background-color':model.bgStyle['background-color'],'background-image':model.bgStyle['background-image']}">
+        <ul class="site-menu">
+            <li v-for="(item,i) in navList" :key="i"
+                :style="{'padding-left':model.padStyle['padding-left']+'px','padding-right':model.paddingStyle['padding-right']+'px'}">
+                <a :href="'http://'+app.saveParams.domainUrl+item.url" @mouseenter="hoverClass=i"
+                   target="_blank" :style="model.navStyle">{{item.name}}
+                    <i v-show="hoverClass==i" class="hoverClass" :style="{backgroundColor:model.navStyle['active-text-color']}"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</v-cptborder>

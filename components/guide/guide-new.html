@@ -1,0 +1,129 @@
+    <div class="guide" v-show="guide" :style="Heig">
+    <div class="vmask" v-if="pop" style="z-index: 9">
+        <div class="popShow" :style="popShow"></div>
+    </div>
+    <div class="guide_new" :style="guideStyle">
+        <div class="guide_up_1" :style="guidesStyle">
+            <!--tip01-->
+            <div v-if="guides">
+                <div class="guide_cont">
+                        <p>欢迎来到苍鹿建站系统</p>
+                        <p>这里有些小提示，帮助您更好的开启建站之旅</p>
+                </div>
+                <div class="guide_click_new">
+                    <span @click="noHide">不用，谢谢</span>
+                    <span @click=yesShow>好的，开始吧</span>
+                </div>
+            </div>
+
+
+            <!--tip02-->
+            <div v-if="guides1">
+                <div class="guide_cont">
+                    <div class="guide_angle" style="top:-20px;left: 20px;border-bottom: 15px solid #ffffff;"></div>
+                    <!--<div class="guide_datale">
+                        <img src="images/mytpl_close.png" alt="">
+                    </div>-->
+                    <div>请选择模板</div>
+                    <p>点击这里，选择一个喜欢的模板开始设计吧！</p>
+                </div>
+                <div class="guide_click">
+                    <span>1/7</span>
+                    <span @click="lastStep(1)">上一步</span>
+                    <span @click="nextStep(1)">下一步</span>
+                </div>
+            </div>
+
+
+
+            <!--tip03-->
+            <div v-if="guides2">
+                <div class="guide_cont">
+                    <div class="guide_angle" style="top:-20px;left: 20px;border-bottom: 15px solid #ffffff;"></div>
+                    <div>页面管理</div>
+                    <p>点击此处可对战点下的所有页面、栏目及导航进行管理，还可以新建/修改页面</p>
+                </div>
+                <div class="guide_click">
+                    <span>2/7</span>
+                    <span @click="lastStep(2)">上一步</span>
+                    <span @click="nextStep(2)">下一步</span>
+                </div>
+            </div>
+
+
+            <!--tip04-->
+            <div v-if="guides3">
+                <div class="guide_cont">
+                    <div class="guide_angle" style="top:20px;left:-20px;border-right: 15px solid #ffffff;"></div>
+                    <div>组件库</div>
+                    <p>这里是常用的组件设计，您可以添加通栏组件拖到常用的组件到页面的设计区域</p>
+                </div>
+                <div class="guide_click">
+                    <span>3/7</span>
+                    <span @click="lastStep(3)">上一步</span>
+                    <span @click="nextStep(3)">下一步</span>
+                </div>
+            </div>
+
+
+            <!--tip06-->
+            <div v-if="guides4">
+                <div class="guide_cont">
+                    <div class="guide_angle" style="top:20px;left:-20px;border-right: 15px solid #ffffff;"></div>
+                    <div>我的模板</div>
+                    <p>点击这里可以保存当前页面为我的模板，可以保存历史记录，随时调取使用</p>
+                </div>
+                <div class="guide_click">
+                    <span>4/7</span>
+                    <span @click="lastStep(4)">上一步</span>
+                    <span @click="nextStep(4)">下一步</span>
+                </div>
+            </div>
+
+            <!--tip05-->
+            <div v-if="guides5">
+                <div class="guide_cont">
+                    <div class="guide_angle" style="top:-20px;left: 365px;border-bottom: 15px solid #ffffff;"></div>
+                    <div>保存网站</div>
+                    <p>即时保存当前页面设计<br/>点击预览就可以立即查看网站效果啦</p>
+                </div>
+                <div class="guide_click">
+                    <span>5/7</span>
+                    <span @click="lastStep(5)">上一步</span>
+                    <span @click="nextStep(5)">下一步</span>
+                </div>
+            </div>
+
+
+
+            <!--tip07-->
+            <div v-if="guides6">
+                <div class="guide_cont">
+                    <div class="guide_angle" style="top:-20px;left: 195px;border-bottom: 15px solid #ffffff;"></div>
+                    <div>多设备操作</div>
+                    <p>点击此处可进行pc/移动端界面设计的切换，记得要先保存好当前页面的设计噢</p>
+                </div>
+                <div class="guide_click">
+                    <span>6/7</span>
+                    <span @click="lastStep(6)">上一步</span>
+                    <span @click="nextStep(6)">下一步</span>
+                </div>
+            </div>
+
+            <!--tip08-->
+            <div v-if="guides7">
+                <div class="guide_cont">
+                    <div class="guide_angle" style="top:-20px;left: 105px;border-bottom: 15px solid #ffffff;"></div>
+                    <div>完成</div>
+                    <p>您掌握这些技能了吗？快来试试吧<br/>若有疑问，可以点击<span>“帮助”</span>重新查看新手指引</p>
+                </div>
+                <div class="guide_click">
+                    <span>7/7</span>
+                    <span @click="lastStep(7)">上一步</span>
+                    <span @click="finishStep">开始建站</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

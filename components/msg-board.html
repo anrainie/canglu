@@ -1,0 +1,63 @@
+<!--留言板-->
+<v-cptborder :model="model" :setting="settingConfig" :editing="editingConfig">
+    <div class="msg-board-module">
+        <el-form :model="model" :rules="rules" size="medium" ref="form" label-width="60px" style="padding-top: 30px;border-top:1px solid #ccc" v-if="model.type != 2">
+            <el-row :gutter="20">
+                <el-col :span="7">
+                    <el-form-item label="姓名" prop="name">
+                        <el-input v-model="model.name"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="7">
+                    <el-form-item label="邮箱" prop="email">
+                        <el-input v-model="model.email"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="7">
+                    <el-form-item label="手机" prop="phone">
+                        <el-input v-model="model.phone"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row class="leave-words">
+                <el-col :span="24">
+                    <el-form-item label="留言" prop="message">
+                        <el-input :autosize="{ minRows: 5, maxRows: 14}" type="textarea" v-model="model.message"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <el-form :model="model" :rules="rules" size="medium" ref="form" label-width="60px" style="padding-top: 30px;border-top:1px solid #ccc" v-else>
+            <el-row :gutter="22">
+                <el-col :span="22">
+                    <el-form-item label="姓名" prop="name">
+                        <el-input v-model="model.name"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="邮箱" prop="email">
+                        <el-input v-model="model.email"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="22">
+                    <el-form-item label="手机" prop="phone">
+                        <el-input v-model="model.phone"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row class="leave-words">
+                <el-col :span="24">
+                    <el-form-item label="留言" prop="message">
+                        <el-input :autosize="{ minRows: 5, maxRows: 14}" type="textarea" v-model="model.message"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <el-row class="words-submit" style="width:100%">
+            <ul class="line-list" :style="btnStyle">
+                <li :class='model.buttonImg' ref="btnitem" style="width:90%" @click="submitMessage()">提交留言</li>
+            </ul>
+        </el-row>
+    </div>
+
+</v-cptborder>

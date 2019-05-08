@@ -1,0 +1,20 @@
+<div class="title color-picker-cpt colorpick-parents">
+    <el-row>
+        <el-col :span="3">
+            <span>{{config.text}}：</span>
+        </el-col>
+        <el-col :span="2">
+            <el-color-picker v-model="model[key].color" show-alpha></el-color-picker>
+        </el-col>
+        <el-col :span="3">
+            <el-input v-model="model[key].color"></el-input>
+        </el-col>
+        <el-col :span="2" style="margin-left: 20px;">
+            <span>背景图片：</span>
+        </el-col>
+        <el-col :span="3" style="position: relative">
+            <img :src="model[key].src" @click="selectImage" v-loading="loading" style="width: 50px;height: 48px; border: 1px solid #ddd">
+            <i class="clearBg" v-if="clearBg" @click="clearBgImg"></i>
+        </el-col>
+    </el-row>
+</div>

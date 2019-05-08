@@ -1,0 +1,45 @@
+<!--左侧模块列表-->
+<div id="tplListIcon" class="mytpl tplListIcon tplSame positionF" @mouseover="if(iconName !== type) show=true;" @mouseout="show=false">
+    <div @click.stop.prevent="toggleIcon" class="btnIconBox positionR pointer boxShadow" :class="{clearBoxShadow: iconName === type}" v-if="!show">
+        <div class="tplImgBox positionA">
+            <img class="iconImage" :src="iconName !== type?'./images/tplList.png':'./images/tplListChosen.png'" alt="">
+        </div>
+    </div>
+    <div @click.stop.prevent="toggleIcon" class="btnIconBox2 positionR pointer boxShadow clearBoxShadow" :class="{clearBoxShadow: iconName === type}" v-if="show&&iconName !== type">
+        <div class="tplIzmgBox positionA" style="position: absolute;top: 28%;left: 15%;">
+            <img class="iconImage" src='./images/plus.png' alt="">
+            <span>组件库</span>
+        </div>
+    </div>
+    <div v-cloak v-show="iconName === type" class="iconRight iconTop positionA">
+        <img src="./images/iconTop.png" alt="">
+    </div>
+    <!-- 模块列表弹窗 -->
+    <div v-cloak v-show="iconName === type" id="tplListDialog" class="tabs positionA fs14 tplSameDialog clearfix">
+        <!-- 弹窗左边的导航 -->
+        <ul class="fl addMduleLeft">
+            <li @click="showWitch=index" :class="{active: showWitch == index}" v-for="(moduleCategory,index) in moduleCategoryList">
+                <a href="javascript:;" v-text="moduleCategory.name"></a>
+            </li>
+        </ul>
+        <div class="addMduleRight fr">
+            <div class="tabsTitle">
+                <span>{{thisModule}}</span>
+                <div class="tpl_right fr" @click.stop="app.iconName = ''">
+                    <div class="closeBox pointer">
+                        <img src="./images/mytpl_close.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <el-collapse v-show="!showElement" class="commonModules scroll-bar" v-model="activeName" accordion>
+                <el-collapse-item :title="models.name" :name="i+1" v-for="(models,i) in moduleConfig" class="moduleViewContainer">
+
+                    <div class="moduleViewContent">
+                        <palette-item v-for="model in models.modules" :model="model" v-if="model.code.indexOf(app.webcode)>-1"></palette-item>
+                    </div>
+                </el-collapse-item>
+            </el-collapse>
+        </div>
+    </div>
+</div>

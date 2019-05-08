@@ -1,0 +1,35 @@
+<div style="margin-top: 10px" class="font-Attributes">
+    <span>{{config.text}}</span>
+    <el-radio-group v-model="model[key].isDefault" style="line-height: 40px">
+        <el-radio :label="false">默认</el-radio>
+        <el-radio :label="true">自定义</el-radio>
+    </el-radio-group>
+    <div v-show="model[key].isDefault" style="margin-left:30px" class="connent">
+        <div class="size-item mar-top10">
+            <span class="subtitle displayI">大小&nbsp;:</span>
+            <el-select v-model="model[key]['font-size']">
+                <el-option v-for="i in 9" :label="i+13+'px'" :key="i+13"
+                           :value="i+13+'px'"></el-option>
+            </el-select>
+        </div>
+        <div class="style-item mar-top10" style="overflow: hidden;">
+            <el-checkbox-group v-model="model[key]['font-weight']" style="width: 130px;line-height: 50px;float:left;">
+                <el-checkbox label="加粗" true-label="bold" false-label="normal"></el-checkbox>
+            </el-checkbox-group>
+            <el-checkbox-group v-model="model[key]['text-decoration']" style="width: 695px;line-height: 50px;float:left;">
+                <el-checkbox label="下划线" true-label="underline" false-label="none"></el-checkbox>
+            </el-checkbox-group>
+        </div>
+        <div class="family-item mar-top10">
+            <span class="subtitle displayI">样式&nbsp;:</span>
+            <el-select v-model="model[key]['font-family']">
+                <el-option v-for="f in fonts" :label="f" :value="f" :key="f"></el-option>
+            </el-select>
+        </div>
+        <div class="font-color-item" style="padding-bottom: 20px;">
+            <span class="subtitle displayI">颜色&nbsp;:</span>
+            <el-color-picker v-model="model[key]['color']" class="top16"></el-color-picker>
+            <input type="text" v-model="model[key]['color']" class="lh30 fs14 vam inputStyle ">
+        </div>
+    </div>
+</div>

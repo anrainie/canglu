@@ -1,0 +1,120 @@
+<v-cptborder v-loading='loading' :model="model" :editing="editingConfig" :setting="settingConfig" :id="_uid"><!--基础-->
+    <link rel="stylesheet" href="https://image-clwebsite.cangluxmt.com/clwebsite/css/dependence/swiper.min.css">
+    <div v-if="model.type==0||model.type==3" style="position:relative;width:100%;">
+        <div :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles"
+             style="width:100%;border-bottom: 1px dashed #ccc;">
+            <el-row :style="model.articleStyle" v-if="model.type==3&&i==start" :gutter="4"
+                    :style="{height:model.imagedHeight,overflow:'hidden'}">
+                <div style="float:left;overflow: hidden;"
+                     :style="{width: model.imageWidth,height: model.imageHeight,margin:app.mobileFit('20px')}">
+                    <v-hover-image :addon="model.addon" style="width:100%;height:100%;" :src="art.image"
+                                   :hoverEffect="model.hoverEffect"></v-hover-image>
+                </div>
+                <div style="float:left;"
+                     :style="{width:'calc( 100% - 60px - '+ model.imageWidth +')','margin-top':app.mobileFit('20px'),'margin-left':app.mobileFit('10px')}">
+                    <div style="width:100%;" :style="{height:app.mobileFit('40px')}">
+                        <a href="javascript:void(0)" target="_self" @click="showDetail(art.id,articles)">
+                            <span ref="title" :id="art.id" class="titleSet sw60" :style="defaultStyle"><img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop" style="padding: 5px 10px 5px 0">{{art.name}}</span>
+                            <span style="float:right;font-size: 13px;color: #999;">{{art.createTime.slice(0,10)}}</span>
+                        </a>
+                    </div>
+                    <div style="width:100%;font-size: 13px;color: #999;" :class="{'line-4-hide':model.type==10||model.type==3}">{{art.summary}}</div>
+                </div>
+            </el-row>
+            <div v-if="(model.type==0)||(model.type==3&&i!=start)" style="width: calc(100% - 20px);"
+                 :style="{height:app.mobileFit('40px'),'line-height':app.mobileFit('40px'),'margin-left':app.mobileFit('10px'),'margin-right':app.mobileFit('10px')}">
+                <a href="javascript:void(0)" target="_self" @click="showDetail(art.id,articles)">
+                    <span ref="title" :id="art.id" class="hover1 titleSet sw75" :style="defaultStyle"><img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop" style="padding: 12px 10px 12px 0">{{art.name}}</span>
+                    <span style="float:right;font-size: 13px;color: #999;">{{art.createTime.slice(0,10)}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div v-if="model.type === 1" style="width:100%;">
+        <div class="swiper-container swiperContainer9">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide swiperSlide" v-for="(art,i) in articles" @click="showDetail(art.id,articles)">
+                    <div class="productInfo" style="margin-top: 15px;padding-bottom: 15px;">
+                        <div class="proImg" :style="{'background-image':'url('+art.image+')','background-position':'center center','background-repeat':'no-repeat','background-size':'cover',height:model.imageHeight}"></div>
+                        <div ref="title" :id="art.id" class="line-1-hide titleSet1" :style="defaultStyle"><img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop" style="padding: 5px 10px 5px 0">{{art.name}}</div>
+                        <div class="line-2-hide" style="font-size: 12px;color:#808080; line-height: 20px;text-align: left">{{art.summary}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--多行配图-->
+    <div v-if="model.type==2" style="width:100%;">
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4"
+                :style="{'border-bottom':'1px dashed #ddd',overflow:'hidden'}">
+            <div style="float:left;height: 100%"
+                 :style="{height:model.imageHeight,width: model.imageWidth,'margin-top':app.mobileFit('20px'),'margin-left':app.mobileFit('10px'),'margin-right':app.mobileFit('10px'),'margin-bottom':app.mobileFit('20px')}">
+                <v-hover-image :addon="model.addon" style="width:100%;height:100%;" :src="art.image"
+                               :style="{height:model.imageHeight,width: model.imageWidth}"
+                               :hoverEffect="model.hoverEffect"></v-hover-image>
+            </div>
+            <a href="javascript:void(0)" target="_self" @click="showDetail(art.id,articles)">
+                <div :style="{width:'calc( 100% - '+ model.imageWidth +' - 30px)',float:'left','margin-top':app.mobileFit('20px')}">
+                    <div style="width:100%;height:40px;line-height: 40px;">
+                        <span class="titleSet sw60" ref="title" :id="art.id" :style="defaultStyle"><img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop" style="padding: 12px 10px 12px 0">{{art.name}}</span>
+                        <span v-if="model.type!= 6" style="float:right;font-size: 13px;color: #999;padding-right: 10px">{{art.createTime.slice(0,10)}}</span>
+                    </div>
+                    <div style="font-size: 13px;color: #999; height: 40px!important;" class="line-2-hide">{{art.summary}}</div>
+                </div>
+
+            </a>
+        </el-row>
+    </div><!--时间轴列表-->
+    <div v-if="model.type==4" style="width:100%;">
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4">
+            <div class="timeLine"><span>{{art.createTime.slice(0,10)}}</span></div>
+            <a href="javascript:void(0)" target="_self" @click="showDetail(art.id,articles)">
+                <el-row :style="{width:'calc( 100% - 150px)',float:'left'}">
+                    <el-col :span="24" >
+                        <span class="titleSet sw100" ref="title" :id="art.id" :style="defaultStyle"><img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop" style="padding: 3px 10px 3px 0;">{{art.name}}</span>
+                    </el-col>
+                </el-row>
+                <el-row :style="{width:'calc( 100% - 150px)',float:'left'}">
+                    <el-col :span="24" class="line-2-hide" style="font-size: 12px;color:#808080;line-height: 30px;">
+                        {{art.summary}}
+                    </el-col>
+                </el-row>
+            </a></el-row>
+    </div><!--基础带简介-->
+    <div v-if="model.type==5" style="width:100%;border-bottom: 1px dashed #ccc;">
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4"
+                style="border-bottom: 1px dashed #ccc;"
+                :style="{height:app.mobileFit('120px'),'padding-bottom':app.mobileFit('20px')}"><a
+                href="javascript:void(0)" target="_self" @click="showDetail(art.id,articles)">
+            <div :style="{width:'100%',padding:app.mobileFit('20px')}">
+                <div style="width:100%;height:40px;line-height: 40px;">
+                    <span class="titleSet sw75" ref="title" :id="art.id" :style="defaultStyle"><img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop" style="padding: 12px 10px 12px 0">{{art.name}}</span>
+                    <span v-if="model.type!= 6" style="float:right;font-size: 13px;color: #999;">{{art.createTime.slice(0,10)}}</span>
+                </div>
+                <div style="font-size: 13px;color: #999; height: 40px!important;" class="line-2-hide">{{art.summary}}</div>
+            </div>
+        </a></el-row>
+    </div><!--日期前置-->
+    <div v-if="model.type==6" style="width:100%;">
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4"
+                :style="model.articleStyle" style="border-bottom: 1px dashed #ccc;"
+                :style="{height:app.mobileFit('100px')}">
+            <div style="text-align: center;float:left;background:rgba(92,166,226,0.2)"
+                 :style="{width:app.mobileFit('80px'),height:app.mobileFit('80px'),'margin-top':app.mobileFit('10px'),'margin-bottom':app.mobileFit('10px'),'margin-left':app.mobileFit('20px'),'margin-right':app.mobileFit('20px'),'line-height':app.mobileFit('40px')}">
+                <div style="color: #5ca6e2;font-size: 20px;" :style="{'line-height':app.mobileFit('50px')}">
+                    {{art.createTime.slice(8,11)}}
+                </div>
+                <div style="color: #5ca6e2;font-size: 14px;" :style="{'line-height':app.mobileFit('20px')}">
+                    {{art.createTime.slice(0,4)}}/{{art.createTime.slice(5,7)}}
+                </div>
+            </div>
+            <a href="javascript:void(0)" target="_self" @click="showDetail(art.id,articles)">
+                <div :style="{width:'calc( 100% - 140px)',float:'left'}">
+                    <div style="width:100%;height:40px;line-height: 40px;">
+                        <span class="titleSet sw100" ref="title" :id="art.id" :style="defaultStyle"><img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop">{{art.name}}</span>
+                        <span v-if="model.type!= 6" style="float:right;font-size: 13px;color: #999;">{{art.createTime.slice(0,10)}}</span>
+                    </div>
+                    <div style="font-size: 13px;color: #999; height: 40px!important;" class="line-2-hide">{{art.summary}}</div>
+                </div>
+            </a></el-row>
+    </div>
+</v-cptborder>

@@ -1,0 +1,18 @@
+body {
+  height: 100%;
+}
+body #box {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+body #box .centerBox {
+  margin: 100px auto;
+  width: 800px;
+  height: 800px;
+}
+body #box .centerBox div {
+  margin-bottom: 10px;
+}
+body #box .centerBox div dl {
+  margin-bottom: 10px;
+}

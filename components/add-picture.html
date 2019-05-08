@@ -1,0 +1,8 @@
+<v-cptborder ref="container" :model="model" :setting="settingConfig" :editing="editingConfig">
+    <v-href :model="model" v-if="model.link.type!=0">
+        <v-hover-image :src="model" :style="model.imageStyle" @click="clickImg(im,i)" :hoverEffect="model.hoverEffect" :addon="model.addon"></v-hover-image>
+    </v-href>
+    <div :model="model" v-else>
+    <v-hover-image :src="model" :style="model.imageStyle" @click="clickImg(im,i)" :hoverEffect="model.hoverEffect" :addon="model.addon"></v-hover-image>
+    </div>
+</v-cptborder>

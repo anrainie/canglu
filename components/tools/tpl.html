@@ -1,0 +1,89 @@
+<!-- 模板按钮 -->
+<div id="tpl" class="positionF" @mouseover="if(app.iconName !== 'tpl') show=true;"
+     @mouseout="show=false" v-if="iconName === type">
+    <div v-cloak class="boxModel fs14 tplDialogStyle">
+        <div class="mytpl_header padleft20 boxModel borderBottom">
+            <span class="boxModel">选择模板</span>
+            <div class="tpl_right fr">
+                <div class="tplSearchBox">
+                    <input class="center" v-model="tempaltesData.name" type="text"
+                           @keyup.enter="tplSearch()" placeholder="请输入关键字">
+                </div>
+                <div class="closeBox tplBottom" @click.stop.prevent="tplDialog">
+                    <img src="./images/mytpl_close.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="tplBottom">
+            <div class="tplsliderBar">
+                <p class="mdTips">选择分类
+                    <span v-for="(item,index) in app.webTypeArr" class="classification"
+                          :class="{active:tempaltesData.themeCode==item.code}"
+                          @click.stop.prevent="select(item)">{{item.name}}</span>
+                </p>
+                <div class="industryClassify sliderSame">
+                    <h5 class="marbottom10">行业</h5>
+                    <ul>
+                        <li @click.stop.prevent="chosenOneLevel(index,tplTopLevel.code,tplTopLevel.parentCode)"
+                            :class="{active:tplTopLevel.code == isThisWebType}"
+                            v-for="(tplTopLevel,index) in tplTopLevelArr"
+                            v-text="tplTopLevel.name"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tplList positionR" style="width: 1208px;">
+                <!-- 二级分类的下拉框 -->
+                <div>
+                    <ul class="clearfix dataUl positionR scroll-bar">
+                        <li v-for="(item,num) in tplWebInfoList" :key="num"
+                            class="fl tplItem pointer">
+                            <div>
+                                <div class="imgBox" @mouseover="hover(num)"
+                                     @mouseout="out">
+                                    <img :src="item.thumbImage" class="img">
+                                    <div class="operating">
+                                        <div class="operatingBox">
+                                            <a :href="'http://'+item.previewUrl" target="_blank"
+                                               class="a reading fl pointer imgBox_operating">预览</a>
+                                            <span class="pointer fl"
+                                                  @click="checkModle(item.id,item.themeCode)"
+                                                  class="chosenUse imgBox_operating">选用</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tplBottom">
+                                <span style="padding-lef:15px">{{item.name}}</span>
+                                <span class="tpl_infoRight fr clearfix">
+                                            <a v-show='item.solutionUrl!=undefined'
+                                               style="margin-right: 30px;"
+                                               :href="app.b2cImaSrc+item.solutionUrl"
+                                               target="_blank" ref="program"
+                                               class="reading fl pointer solution"
+                                               @mouseover="ahover(num)"
+                                               @mouseout="aout(num)">解决方案
+                                            <i class="el-icon-download"></i>
+                                            </a>
+                                    </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <el-dialog title="复制模板提示" :visible.sync="dialogFormVisible" :modal="false" width="40%">
+        <el-form :model="form">
+            <el-form-item label="" :label-width="formLabelWidth">
+                <el-radio v-model="form.radio" label="0">保留原网站数据（文章，产品等相关后台数据）</el-radio>
+                <el-radio style="margin-left:0;" v-model="form.radio" label="1">
+                    不保留原网站数据（使用模板中的数据，原数据将会丢失）
+                </el-radio>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="comfirms"  v-loading="determine">确 定</el-button>
+        </div>
+    </el-dialog>
+</div>

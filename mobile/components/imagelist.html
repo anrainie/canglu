@@ -1,0 +1,25 @@
+<v-cptborder :model="model" :setting="settingConfig" :editing="editingConfig">
+    <link rel="stylesheet" href="https://image-clwebsite.cangluxmt.com/clwebsite/css/dependence/swiper.min.css">
+    <div>
+        <div class="swiper-container swiperContainer3" v-if="model.type === 0">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide swiperSlide" v-for="(image,n) in model.images">
+                    <div class="productInfo" :style="model.imageContainerStyle" @click="getLink(image)">
+                        <div class="proImg"
+                             :style="{'background-image':'url('+image.src+')','background-position':'center center','background-repeat':'no-repeat','background-size':'cover',height:model.imageStyle.height}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-container swiperContainer2" v-if="model.type === 1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide swiperSlide" v-for="(image,n) in model.images">
+                    <div class="productInfo" :style="model.imageContainerStyle" @click="getLink(image)">
+                        <div class="proImg"
+                             :style="{'background-image':'url('+image.src+')','background-position':'center center','background-repeat':'no-repeat','background-size':'cover',height:model.imageStyle.height}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</v-cptborder>

@@ -1,0 +1,38 @@
+<!--留言板-->
+<v-cptborder :model="model" :setting="settingConfig" :editing="editingConfig">
+    <div class="msg-board-mobile">
+        <el-form :model="model" :class="model.type==0?'mobile-msg-1':''" :label-position="model.type == 2 ? 'top' : ''" :rules="rules"
+            size="medium" ref="form" label-width="60px" style="padding-top: 30px;padding-left:15px;padding-right:15px;border-top:1px solid #ccc">
+            <el-row :gutter="20">
+                <el-col :span="24">
+                    <el-form-item label="姓名" prop="name">
+                        <el-input v-model="model.name" ref="name"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="邮箱" prop="email">
+                        <el-input v-model="model.email" ref="email"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="手机" prop="phone">
+                        <el-input v-model="model.phone" ref="phone"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="24">
+                    <el-form-item label="留言" prop="message">
+                        <el-input :autosize="{ minRows: 5, maxRows: 14}" type="textarea" v-model="model.message" ref="message"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+
+        <el-row class="words-submit" style="width:100%">
+            <ul class="line-list">
+                <li v-if="model.buttonImg!='mobile-btn-4'" :class="model.buttonImg" @click="submitMessage" ref="btnitem" style="width:90%" :style="{'background-color':model.btnBg}">提交留言</li>
+                <li v-else :class="model.buttonImg" @click="submitMessage" ref="btnitem" style="width:90%" :style="{'border-color':model.btnBg,'color':model.btnBg}">提交留言</li>
+            </ul>
+        </el-row>
+    </div>
+
+</v-cptborder>

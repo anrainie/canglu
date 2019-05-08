@@ -1,0 +1,44 @@
+<div class="memBox">
+    <div class="typeBox">
+        <div class="mb20">
+            <div class="disib">模块样式&nbsp;:</div>
+            <div class="disib">
+                <div v-for="(item,index) in imageSrc" :key="index" class="disib imgBox pr"
+                     @click="Selected(index)"
+                     :class="{cur: app.groupContainer.header.memember.type==index+1}">
+                    <img :src="item.src" :alt="item.art">
+                </div>
+            </div>
+        </div>
+        <div class="contentBox pr">
+            <div class="disib">显示内容&nbsp;:</div>
+            <div class="addList pa disib" @click="openAddDialog" >添加项</div>
+            <ul class="list-head">
+                <li>内容</li>
+                <li>显示/隐藏</li>
+                <li>排序</li>
+                <li>操作</li>
+            </ul>
+            <div v-for="(item,index) in model.list" :key="index">
+                <ul class="list-body pr disb">
+                    <li>
+                        <div class="f1 pr">
+                            <h3 v-text="item.content" class="content"></h3>
+                        </div>
+                        <h4 class="cs-btn f1 disb ">
+                            <i  class="isShow disib" v-show="item.useYn==1"></i>
+                            <i  class="ishide disib" v-show="item.useYn==0"></i>
+                        </h4>
+                        <h4 class="cs-btn  f1 disb">
+                            <span>{{item.sort}}</span>
+                        </h4>
+                        <h4 class="cs-btn f1 disb">
+                            <i class="modify"  @click="modify(item.id)"></i>
+                            <i class="del" @click="del(item.id,index)"></i>
+                        </h4>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

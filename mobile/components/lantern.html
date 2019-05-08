@@ -1,0 +1,14 @@
+<!--幻灯片-->
+<div v-show="visible" style="z-index:100;left:0;top:0;width:100%;height:100%;position: absolute">
+    <div @click="visible=false"
+         style="left:0;top:0;width:100%;height:100%;opacity:.7;background-color:black;position: absolute"></div>
+    <el-carousel :arrow="arrow" :indicator-position="indicator" :interval="4000" :initial-index="index" type="card"
+                 :height="app.mobileFit('202px')" style="top:200px;">
+        <el-carousel-item v-for="image in model.images" :key="image"><img
+                style="width:calc(100% - 20px);padding:10px 10px;background:white;"
+                :style="{height:app.mobileFit('180px')}" :src="image.src" :title="image.desc" :alt="image.desc"/><i
+                class="el-icon-close" @click="visible=false"
+                style="background:#ccc;opacity:.6;position:absolute;width:.8rem;height:.8rem;font-size:.8rem;right:.2rem;top:.2rem;"></i>
+        </el-carousel-item>
+    </el-carousel>
+</div>

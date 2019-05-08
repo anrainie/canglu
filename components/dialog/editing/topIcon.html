@@ -1,0 +1,10 @@
+<div class="radio-type">
+    <span class="radio-title" v-text="config.text1"></span>
+    <el-radio class="radio-btn" v-for="item in config.ShowType" v-model="model[key].isShow" :label="item.value">{{item.text}}</el-radio>
+    <div v-if="model[key].isShow">
+        <span class="radio-title" v-text="config.text2"></span>
+        <el-radio class="radio-btn" v-for="item in config.iconList" v-model="model[key].showIcon" :label="item.imgSrc"><img
+                :src="item.imgSrc" alt="" style="padding: 12px 0;"></el-radio>
+    </div>
+
+</div>

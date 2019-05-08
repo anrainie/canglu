@@ -1,0 +1,27 @@
+<div style="padding: 15px 0;">
+    <div class="navList">
+        <dl>
+            <dt>
+                <ul>
+                    <li>名称</li>
+                    <li>显示/隐藏</li>
+                    <li>排序</li>
+                </ul>
+            </dt>
+            <dd class="scroll-bar">
+                <ul v-for="(option,index) in model[key]">
+                    <li>{{option.name}}</li>
+                    <li>
+                        <i class="show"  @click="option.useYn=0" v-if="option.useYn"></i>
+                        <i class="hide" @click="option.useYn=1" v-if="!option.useYn"></i>
+                    </li>
+                    <li>
+                        <i class="down" @click="orderList(1,index)" v-if="index < model[key].length-1"></i>
+                        <i class="top" @click="orderList(2,index)" v-if="index > 0"></i>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+    <div class="saveOrders" @click="saveOrders">确认</div>
+</div>

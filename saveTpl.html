@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>保存模板</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.0/theme-chalk/index.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/saveTpl.css">
+</head>
+<body>
+  <div id="box">
+    <div class="centerBox">
+      <div class="title">
+        <span>保存模板</span>
+      </div>
+      <div class="center">
+        <div>
+          <span>模板名称:</span>
+          <input type="text" placeholder="请输入模板名称" v-model="name">
+        </div>
+        <div>
+          <span>用户ID:</span>
+          <input type="number" placeholder="请输入用户ID" v-model="userId">
+        </div>
+        <div>
+          <span>网站ID:</span>
+          <input type="number" placeholder="请输入网站ID:" v-model="userWebId">
+        </div>
+        <div>
+          <span>客户端:</span>
+          <select v-model="channel">
+            <option disabled value="">请选择</option>
+            <option value="1">PC</option>
+            <option value="2">微站</option>
+          </select>
+        </div>
+        <div>
+          <dl class="types">
+            <dt>选择网站类型</dt>
+            <dd>
+              <input type="radio" @click="cancleEmpty" id="typeSHOW" value="SHOW" v-model="themeCode">
+              <label for="typeSHOW" :class="{active:themeCode === 'SHOW'}">企业官网型</label>
+              <input type="radio" @click="cancleEmpty" id="typeB2C" value="B2C" v-model="themeCode">
+              <label for="typeB2C" :class="{active:themeCode === 'B2C'}">企业电商型</label>
+              <input type="radio" @click="cancleEmpty" id="typeB2B2C" value="B2B2C" v-model="themeCode">
+              <label for="typeB2B2C" :class="{active:themeCode === 'B2B2C'}">商城平台型</label>
+              <input type="radio" @click="cancleEmpty" id="typeNEWS" value="NEWS" v-model="themeCode">
+              <label for="typeNEWS" :class="{active:themeCode === 'NEWS'}">综合门户型</label>
+            </dd>
+          </dl>
+          <dl class="content-item">
+            <dt>选择行业分类</dt>
+            <dd>
+              <select v-model="industryCode">
+                <option disabled value="">请选择</option>
+                <option v-for="(tplTopLevel,index) in tplTopLevelArr" :value="tplTopLevel.code">
+                  {{tplTopLevel.name}}
+                </option>
+              </select>
+            </dd>
+          </dl>
+          <dl class="content-item">
+            <dt>缩略图</dt>
+            <dd>
+              <div class="thumbZoom">
+                <form action="" enctype="multipart/form-data" method="post">
+                  <input type="file" name="imageFile" id="tplthumbImg" value="点击上传"  accept="image/png,image/PNG,image/jpg,image/JPG,image/gif,image/GIF,image/jpeg,image/JPEG"
+                  />
+                  <input type="hidden" name="param" value="templates">
+                </form>
+                <p class="tips">建议尺寸（px）: 275 × 180</p>
+                <p class="btn">上传图片</p>
+              </div>
+            </dd>
+          </dl>
+        </div>
+        <div class="square-btn-box clearfix text-dcrtion">
+          <button type="button" @click="counterSaveTpl" class="" v-loading="loading">确定</button>
+          <button type="button" @click="destroyOldInfoT" class="">清空</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script src="https://image-clwebsite.cangluxmt.com/reference/clVue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.0/index.js"></script>
+<script src="https://image-clwebsite.cangluxmt.com/reference/clJq.js"></script>
+<script src="./js/dependence/jquery.form.js"></script>
+<script src="./js/workspace/utils.js"></script>
+<script src="./js/saveTpl.js"></script>

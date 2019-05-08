@@ -1,0 +1,14 @@
+<v-cptborder :model="model" :editing="editingConfig" :setting="settingConfig">
+    <link rel="stylesheet" href="https://image-clwebsite.cangluxmt.com/clwebsite/css/dependence/swiper.min.css">
+    <div class="swiper-container swiperContainer1" style="width:100%;height:100%;margin: 0">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide swiperSlide" v-for="(image,i) in model.images">
+                <div class="productInfo" @click="getLink(image)" style="width: 100%;height: 100%;padding-bottom: 0">
+                    <div class="proImg"
+                         :style="{'background-image':'url('+image.src+')','background-position':'center center','background-repeat':'no-repeat','background-size':'cover',height:'100%'}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination" style="bottom: 20px;"></div>
+    </div>
+</v-cptborder>

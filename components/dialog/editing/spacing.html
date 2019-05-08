@@ -1,0 +1,29 @@
+<div class='spacing-Attributes'>
+    <div class="mt10">
+    <div class="">
+        <span class="subtitle displayI">内边距&nbsp;:</span>
+        <el-radio-group v-model="model.spacingShow">
+            <el-radio :label="false" @change="resume(model.padStyle)">默认</el-radio>
+            <el-radio :label="true">自定义</el-radio>
+        </el-radio-group>
+    </div>
+    <div class="connent" v-show="model.spacingShow">
+        <!--<div class="ml30">-->
+            <!--<span>上&nbsp;:</span>-->
+            <!--<input type="text" v-model="model.paddingStyle['padding-top']"-->
+                   <!--class="lh30 alignC fs14 inputStyle">-->
+            <!--<span class="self-subtitle">下&nbsp;:</span>-->
+            <!--<input type="text" v-model="model.paddingStyle['padding-bottom']"-->
+                   <!--class="lh30 alignC fs14 inputStyle">-->
+        <!--</div>-->
+        <div class="ml30">
+            <span >左&nbsp;:</span>
+            <input type="text" v-model="model.padStyle['padding-left']"
+                   class="lh30 alignC fs14 inputStyle">
+            <span class="self-subtitle">右&nbsp;:</span>
+            <input type="text" v-model="model.padStyle['padding-right']"
+                   class="lh30 alignC fs14 inputStyle">
+        </div>
+    </div>
+    </div>
+</div>

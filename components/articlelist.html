@@ -1,0 +1,229 @@
+<v-cptborder v-loading='loading' :model="model" :editing="editingConfig" :setting="settingConfig" :id="_uid">
+    <!--基础-->
+    <div v-if="model.type==0||model.type==3" style="position:relative;width:100%;">
+        <div :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles"
+             style="width:100%;border-bottom: 1px dashed #ccc;" :style="model.underBorder">
+
+            <el-row :style="model.articleStyle" v-if="model.type==3&&i==start" :gutter="4"
+                    :style="{height:model.imagedHeight,overflow:'hidden'}">
+                <div style="float:left;margin: 20px;overflow: hidden;"
+                     :style="{width: model.imageWidth,height: model.imageHeight}">
+
+                    <v-hover-image :addon="model.addon" style="width:100%;height:100%;" :src="art.image"
+                                   :hoverEffect="model.hoverEffect"></v-hover-image>
+                </div>
+                <div style="float:left;margin-top: 20px; margin-left: 10px;"
+                     :style="{width:'calc( 100% - 60px - '+ model.imageWidth +')'}">
+                    <div style="width:100%;height:40px;">
+                        <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+                            <div ref="titleBg" class="w10s w10sh lh40" @mouseover="hoverStyle(art.id)"
+                                 @mouseleave="defaultStyle">
+                                <span ref="title" :id="art.id" class="w60s hover1" :style="dstyle"><img
+                                        :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop"
+                                        style="padding: 12px 10px 12px 0">{{art.name}}</span>
+                                <span ref="time" class="hover1" :style="dstyle" v-show="model.timeShow"
+                                      style="float:right;">{{art.createTime.slice(0,10)}}</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div style="width:100%;font-size: 13px;color: #999;" :class="{'line-4-hide':model.type==3}">
+                        {{art.summary}}
+                    </div>
+                </div>
+
+            </el-row>
+
+            <div v-if="model.type==0||(model.type==3&&i!=start)"
+                 style="height:40px;line-height:40px;width: calc(100% - 20px);margin: 0 10px;" :ref="_uid">
+                <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+                    <div ref="titleBg" class="w10s w10sh lh40" @mouseover="hoverStyle(art.id)"
+                         @mouseleave="defaultStyle">
+                        <span ref="title" :id="art.id" class="hover1" :style="dstyle"><img
+                                :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop"
+                                style="padding: 12px 10px 12px 0">{{art.name}}</span>
+                        <span ref="time" class="hover1" :style="dstyle" v-show="model.timeShow" style="float:right;">{{art.createTime.slice(0,10)}}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="model.type==1" style="width:100%;">
+        <div v-if="paging(i)" v-for="(art,i) in articles"
+             style="margin:2% 1%;width:48%;float:left;box-sizing:border-box;">
+            <div :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}" style="height:100%;">
+                <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+                    <el-row>
+                        <el-col :span="24">
+                            <div style="width: 100%;overflow:hidden;" :style="{height: model.imageHeight}">
+                                <v-hover-image :addon="model.addon" :style="{height: model.imageHeight}"
+                                               :src="art.image" :hoverEffect="model.hoverEffect"></v-hover-image>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row style="padding:2% 4% 0 4%;">
+                        <el-col class="line-1-hide" :span="24">
+                            <div ref="titleBg" class="w10s w10sh lh40">
+                                <span class="hover1" :style="dstyle" ref="title" :id="art.id"
+                                      @mouseover="hoverStyle(art.id)" @mouseleave="defaultStyle"><img
+                                        :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop"
+                                        style="padding: 5px 10px 5px 0">{{art.name}}</span>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row style="padding:0 4%">
+                        <el-col :span="24" style="font-size: 12px;color:#808080;line-height: 30px;" class="line-2-hide">
+                            {{art.summary}}
+                        </el-col>
+                    </el-row>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!--多行配图-->
+    <div v-if="model.type==2" style="width:100%;">
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4"
+                :style="{'border-bottom':'1px dashed #ddd',overflow:'hidden'}" :style="model.underBorder">
+            <div style="float:left; margin: 20px 10px; height: 100%"
+                 :style="{height:model.imageHeight,width: model.imageWidth}">
+                <v-hover-image :addon="model.addon" style="width:100%;height:100%;" :src="art.image"
+                               :style="{height:model.imageHeight,width: model.imageWidth}"
+                               :hoverEffect="model.hoverEffect"></v-hover-image>
+            </div>
+            <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+                <div style="margin-top: 20px;"
+                     :style="{width:'calc( 100% - 20px - '+ model.imageWidth +')',float:'left'}">
+                    <div ref="titleBg" class="w10s w10sh lh40" @mouseover="hoverStyle(art.id)"
+                         @mouseleave="defaultStyle">
+                        <span ref="title" :id="art.id" :style="dstyle" class="w75s hover1"><img
+                                :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop"
+                                style="padding: 12px 10px 12px 0">{{art.name}}</span>
+                        <span ref="time" :style="dstyle" class="hover1" v-show="model.timeShow"
+                              style="float:right;padding-right: 10px">{{art.createTime.slice(0,10)}}</span>
+                    </div>
+                    <div style="font-size: 13px;color: #999; height: 40px!important;" class="line-2-hide">
+                        {{art.summary}}
+                    </div>
+                </div>
+
+            </a>
+        </el-row>
+    </div>
+
+    <!--时间轴列表-->
+    <div v-if="model.type==4" style="width:100%;">
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4">
+            <div class="timeLine">
+                <span v-show="model.timeShow">{{art.createTime.slice(0,10)}}</span>
+            </div>
+            <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+                <el-row :style="{width:'calc( 100% - 150px)',float:'left'}">
+                    <el-col :span="24">
+                        <div ref="titleBg" class="w10s w10sh lh40">
+                            <span class="w75s hover1" :style="dstyle" ref="title" :id="art.id"
+                                  @mouseover="hoverStyle(art.id)" @mouseleave="defaultStyle"><img
+                                    :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop"
+                                    style="padding: 3px 10px 3px 0;">{{art.name}}</span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-row :style="{width:'calc( 100% - 150px)',float:'left'}">
+                    <el-col :span="24" class="line-2-hide" style="font-size: 12px;color:#808080;line-height: 30px;">
+                        {{art.summary}}
+                    </el-col>
+                </el-row>
+            </a>
+        </el-row>
+    </div>
+
+    <!--基础带简介-->
+    <div v-if="model.type==5" style="width:100%;border-bottom: 1px dashed #ccc;" :style="model.underBorder">
+
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4"
+                style="border-bottom: 1px dashed #ccc;padding-bottom: 20px; height: 120px;" :style="model.underBorder">
+            <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+
+                <div style="width: 100%;padding: 20px;">
+                    <div ref="titleBg" class="w10s w10sh lh40" @mouseover="hoverStyle(art.id)"
+                         @mouseleave="defaultStyle">
+                        <span ref="title" :id="art.id" :style="dstyle" class="w75s hover1"><img
+                                :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop"
+                                style="padding: 12px 10px 12px 0">{{art.name}}</span>
+                        <span ref="time" class="hover1" :style="dstyle" v-show="model.timeShow" style="float:right;">{{art.createTime.slice(0,10)}}</span>
+                    </div>
+                    <div style="font-size: 13px;color: #999; height: 40px!important;" class="line-2-hide">
+                        {{art.summary}}
+                    </div>
+                </div>
+            </a>
+        </el-row>
+    </div>
+    <!--日期前置-->
+    <div v-if="model.type==6" style="width:100%;">
+        <el-row :style="model.articleStyle" v-if="paging(i)" v-for="(art,i) in articles" :gutter="4"
+                :style="model.articleStyle"
+                style="height:100px;border-bottom: 1px dashed #ccc;" :style="model.underBorder">
+
+            <div style="width:80px;height:80px;margin:10px 20px;line-height:40px;text-align: center;float:left;background:rgba(92,166,226,0.2)">
+                <div style="color: #5ca6e2;font-size: 20px;line-height: 50px;">{{art.createTime.slice(8,11)}}</div>
+                <div style="color: #5ca6e2;font-size: 14px; line-height: 20px;">
+                    {{art.createTime.slice(0,4)}}/{{art.createTime.slice(5,7)}}
+                </div>
+            </div>
+            <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+                <div style="width:calc( 100% - 140px);float:left">
+                    <div style="width:100%;height:40px;line-height: 40px;">
+                        <div ref="titleBg" class="w10s w10sh">
+                            <span class="hover1 w10s" :style="dstyle" ref="title" :id="art.id"
+                                  @mouseover="hoverStyle(art.id)" @mouseleave="defaultStyle"><img
+                                    :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow && art.isTop">{{art.name}}</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 13px;color: #999; height: 40px!important;" class="line-2-hide">
+                        {{art.summary}}
+                    </div>
+                </div>
+
+            </a>
+        </el-row>
+    </div>
+
+    <div v-if="model.type==8" style="width:100%;">
+        <div v-if="paging(i)" v-for="(art,i) in articles"
+             style="margin:2% 2%;width:46%;float:left;box-sizing:border-box;">
+            <div :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}" style="height:100%;">
+                <a href="javascript:void(0)" target="_blank" @click="showDetail(art.id,articles)">
+                    <el-row>
+                        <el-col :span="24">
+                            <div :style="{height:model.imageHeight}">
+                                <v-hover-image :addon="model.addon" :src="art.image" :hoverEffect="model.hoverEffect"
+                                               :style="{height:model.imageHeight}"></v-hover-image>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row style="padding:2% 4% 0 4%;">
+                        <el-col class="line-1-hide hover1" :style="dstyle" :span="24" ref="title" :id="art.id"
+                                @mouseover="hoverStyle(art.id)" @mouseleave="defaultStyle">
+                            <img :src="model.topIcon.showIcon" alt="" v-if="model.topIcon.isShow">{{art.name}}
+                        </el-col>
+                    </el-row>
+                    <el-row style="padding:0 4%">
+                        <el-col :span="24" style="font-size: 12px;color:#808080;line-height: 30px;" class="line-2-hide">
+                            {{art.summary}}
+                        </el-col>
+                    </el-row>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <el-row style="position:relative;width:100%;height:40px;text-align: center;margin-top:20px;float:left;"
+            v-if="model.showPage">
+        <el-pagination small layout="prev, pager, next" :page-size="model.capacity" :total="articles.length"
+                       @current-change="function (e){currentPage=e-1;}">
+        </el-pagination>
+    </el-row>
+
+</v-cptborder>

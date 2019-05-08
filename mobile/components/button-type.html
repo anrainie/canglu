@@ -1,0 +1,20 @@
+<v-cptborder :model="model" :setting="settingConfig" :editing="editingConfig">
+    <v-href :model="model">
+        <div>
+            <el-button v-if="model.btnStatus!='btn-type-3'" class="btn-type" :plain="model.btnStatus=='btn-type-3'"
+                       :round="model.btnStatus=='btn-type-4'"
+                       :style="{'background-color':model.btnBg,'background-image':'url('+model.image.src+')','background-repeat':model.image.repeat,'background-size':model.image.size,'background-position':model.image.position,'font-size':model['font-size']}"
+                       type="primary"
+                       style="width: 80%;height: 80%;margin: auto;top:0;left:0;right:0;bottom: 0;position: absolute;border-color:transparent"
+                       :class="model.btnStatus" ref="button"><span ref="title">{{model.text}}</span>
+            </el-button>
+            <el-button v-else class="btn-type" :plain="model.btnStatus=='btn-type-3'"
+                       :round="model.btnStatus=='btn-type-4'"
+                       :style="{'border-color':model.btnBg+'!important',color:model.btnBg,'font-size':model['font-size']}"
+                       type="primary"
+                       style="width: 80%;height: 80%;margin: auto;top:0;left:0;right:0;bottom: 0;position: absolute;border-color:transparent"
+                       :class="model.btnStatus" ref="button"><span ref="title">{{model.text}}</span>
+            </el-button>
+        </div>
+    </v-href>
+</v-cptborder>

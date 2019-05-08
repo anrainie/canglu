@@ -1,0 +1,12 @@
+<div style="display: inline-block">
+    <ul class="clearfix">
+        <li v-for="(item,index) in model.list" style="display: inline-block;" class="fl mr10" v-if="item.useYn==1">
+            <a target="_blank" :href="item.link" v-if="item.target==2">
+                {{item.content}}</a>
+            <a :href="item.link" v-if="item.target==1">{{item.content}}</a>
+        </li>
+    </ul>
+    <button class="editBtn" @click="setting" v-if="model.btnShow">
+        编辑
+    </button>
+</div>

@@ -1,0 +1,97 @@
+<v-cptborder :model="model" :setting="settingConfig" :editing="editingConfig">
+    <link rel="stylesheet"
+          href="https://image-clwebsite.cangluxmt.com/clwebsite/css/dependence/swiper.min.css">
+    <div v-if="model.type == 0">
+        <el-row class="mobile_productList">
+            <div class="productList-type1" v-for="p in productList" @click="clickClumn">
+                <el-row v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                    <span :style="c.style" class="proListText">{{c.prefix}}{{p[c.key]}}</span>
+                </el-row>
+            </div>
+
+
+        </el-row>
+    </div>
+    <div v-if="model.type === 1"><!--图文-->
+        <el-row>
+            <span style="width: 48%;margin-left: 1.5%;float:left;cursor:pointer" v-for="p in productList"
+                  @click="showDetail(p)" :style="{'margin-top':app.mobileFit('10px')}">
+                <el-card :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}"
+                         style="height:100%;border:none;background-color: transparent;box-shadow: none;border-radius: 0">
+                    <v-hover-image :hoverEffect="model.hoverEffect" @click="pictureClick" style="width: 100%"
+                                   :style="{height:model.imageStyle.height}"
+                                   :src="app.b2cImaSrc+p.masterImg"></v-hover-image>
+                    <div style="width: 100%;height: auto;padding: 5px;text-align: left" :style="titlePadding">
+                        <el-row v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                            <span :style="c.style" class="proListText">{{c.prefix}}{{p[c.key]}}</span>
+                        </el-row>
+                    </div>
+                </el-card>
+            </span>
+        </el-row>
+    </div>
+    <div v-if="model.type === 2">
+        <el-row>
+            <span style="width: 32%;margin-left: 1%;float:left;cursor:pointer" v-for="p in productList" @click="showDetail(p)" :style="{'margin-top':app.mobileFit('10px')}">
+                <el-card :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}" style="height:100%;border:none;background-color: transparent;box-shadow: none;border-radius: 0">
+                    <v-hover-image :hoverEffect="model.hoverEffect" @click="pictureClick" style="width: 100%" :style="{height:model.imageStyle.height}" :src="app.b2cImaSrc+p.masterImg"></v-hover-image>
+                    <div style="width: 100%;text-align: left;height: auto" :style="titlePadding">
+                        <el-row v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                            <span :style="c.style" class="proListText">{{c.prefix}}{{p[c.key]}}</span>
+                        </el-row>
+                    </div>
+                </el-card>
+            </span>
+        </el-row>
+    </div>
+    <div v-if="model.type === 3">
+        <el-row style="position: relative;cursor:pointer" v-for="p in productList" @click.native="showDetail(p)">
+            <el-card style="float:left;position:relative;width: 95%;margin: 2.5%;border:none;background-color: transparent;box-shadow: none;border-radius: 0" :style="{height:model.imageStyle.height}" :body-style="{ 'padding': '0 0 0 0',height:'100%',width:'100%'}">
+                <el-row :gutter="30" style="margin: 0">
+                    <el-col style="float: left;padding: 0" :style="{width:model.imageStyle.width,}">
+                        <v-hover-image :hoverEffect="model.hoverEffect" style="display: inline-block" :style="{width:model.imageStyle.width,height:model.imageStyle.height}" :src="app.b2cImaSrc+p.masterImg"></v-hover-image>
+                    </el-col>
+                    <el-col style="float: left; padding: 0 10px 0 0; margin-left: 15px" :style="wid">
+                        <el-row style="display: block" v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                            <span class="proListText" :style="c.style">{{c.prefix}}{{p[c.key]}}</span>
+                        </el-row>
+                    </el-col>
+                </el-row>
+            </el-card>
+        </el-row>
+    </div>
+    <div v-if="model.type === 4">
+        <div class="swiper-container swiperContainer7">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide swiperSlide" v-for="(p,x) in products" @click="showDetail(p)">
+                    <div class="productInfo" style="margin-bottom: 35px;margin-top: 15px;width: 100%;background-color: #fff;border-radius: 5px">
+                        <div class="proImg" :style="{'background-image':'url('+app.b2cImaSrc+p.masterImg+')','background-position':'center center','background-repeat':'no-repeat','background-size':'cover',height:model.imageStyle.height}" style="border-radius: 5px 5px 0 0;"></div>
+                        <div :style="titlePadding">
+                            <div class="proTitle" v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                                <span :style="c.style">{{c.prefix}}{{p[c.key]}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div v-if="model.type === 5">
+        <div class="swiper-container swiperContainer6">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide swiperSlide" v-for="(p,x) in products" @click="showDetail(p)">
+                    <div class="productInfo" style= "margin-top: 15px;width: 100%;background-color: #fff;border-radius: 5px">
+                        <div class="proImg"
+                             :style="{'background-image':'url('+app.b2cImaSrc+p.masterImg+')','background-position':'center center','background-repeat':'no-repeat','background-size':'cover',height:model.imageStyle.height}" style="border-radius: 5px 5px 0 0;"></div>
+                        <div :style="titlePadding">
+                            <div class="proTitle" v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                                <span :style="c.style">{{c.prefix}}{{p[c.key]}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</v-cptborder>

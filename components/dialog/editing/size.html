@@ -1,0 +1,36 @@
+<el-row class="title title_s " v-bind:class="'title_'+model.type">
+    <span>{{config.text}}：</span>
+    <span>高:</span>
+    <input type="text" style="width:50px;height:30px;border: 1px solid #cccccc;padding:2px;border-radius: 2px;"
+           v-model="model[key].height"/>
+    <!-- <i class="el-icon-minus"></i> -->
+    <span style="margin-left: 20px;">宽:</span>
+    <input type="text" style="width:50px;height:30px;border: 1px solid #cccccc;padding:2px;border-radius: 2px;"
+           v-model="model[key].width"/>
+    <el-row v-if="model.type === 5" style="display: inline-block">
+        <span>下标间距:</span>
+        <input type="text" v-model='model.style.iMRight' style="width:50px;height:30px;border: 1px solid #cccccc;padding:2px;border-radius: 2px;"/>
+    </el-row>
+    <el-row v-if="model[key]['margin-left']">
+        <span>左边距:</span>
+        <input type="text" style="width:50px;height:30px;border: 1px solid #cccccc;padding:2px;border-radius: 2px;"
+               v-model="model[key]['margin-left']"/>
+        <!-- <i class="el-icon-minus"></i> -->
+        <span style="margin-left: 20px;">上边距:</span>
+        <input type="text"
+               style="width:50px;height:30px;border: 1px solid #cccccc;padding:2px;border-radius: 2px;"
+               v-model="model[key]['margin-top']"/>
+    </el-row>
+    <el-row v-if="model.imageContainerStyle['margin-left'] && model.type !=5 && model.type !=6 && model.type !=0"
+            v-model="model.type">
+        <span v-show="model.type !=4">左边距:</span>
+        <input v-show="model.type !=4" type="text"
+               style="width:50px;height:30px;border: 1px solid #cccccc;padding:2px;border-radius: 2px;"
+               v-model="model.imageContainerStyle['margin-left']"/>
+        <!-- <i class="el-icon-minus"></i> -->
+        <span style="margin-left: 20px;">上边距:</span>
+        <input type="text"
+               style="width:50px;height:30px;border: 1px solid #cccccc;padding:2px;border-radius: 2px;"
+               v-model="model.imageContainerStyle['margin-top']"/>
+    </el-row>
+</el-row>

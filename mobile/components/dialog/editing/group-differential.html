@@ -1,0 +1,12 @@
+<div class="btn-edit">
+    <span v-text="config.name"></span>
+    <el-select v-model="model.Differential" filterable placeholder="请选择">
+        <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+        </el-option>
+    </el-select>
+    <p style="color: #f12305;">*如需使用差速效果,请选择背景图片,填充效果最佳</p>
+</div>

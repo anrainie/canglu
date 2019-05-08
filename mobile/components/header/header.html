@@ -1,0 +1,21 @@
+<header class="header" v-if="!app.isPreview">
+    <v-header-left :model="app.firstParentId" :webcode="webcode"></v-header-left>
+    <v-header-center :model="app.groupContainer" :webcode="webcode"></v-header-center>
+    <v-guide-new :webcode="webcode" :guide="guide"></v-guide-new>
+    <div class="header-right positionR" style="position: relative">
+        <ul>
+            <li class="ripple positionR" @click="guideShow">
+                <span>帮助</span>
+            </li>
+            <li class=" toggleMob positionR " style="padding-right: 0px;padding-left: 0" v-if='app.isShowPC'>
+                <a :href="channelflag[app.channel-1].src" class="toggleMobil positionR ripple">
+                    <img :src="channelflag[app.channel-1].img" class="positionR">{{channelflag[app.channel-1].name}}
+                </a>
+            </li>
+            <li class="ripple positionR" spinner="" :plain="true" v-loading="app.toPreivewLoad" @click="app.toPreivew" plain>
+                <span>预览</span>
+            </li>
+            <li class="ripple positionR save" @click="savePage()" :plain="true" v-loading="saveLoading">保存</li>
+        </ul>
+    </div>
+</header>

@@ -1,0 +1,19 @@
+<div class="footer" v-if="showFooter" :style="{'background-color':model['background-color']}" @click="showBtns=true" @mouseleave="showBtns=false">
+    <ul class="mobileFooter" :style="autoFooter">
+        <li class="mobileFooter" v-for="(option,ex) in model.navList" v-if="option.isShow">
+            <v-href :model="option">
+                <div v-if="option.actived==false || option.actived==undefined">
+                    <i :style="{'background-image':'url('+option.imgSrc+')'}"></i>
+                    <span class="phoneTxt" :style="{color:model['color']}">{{option.name}}</span>
+                </div>
+                <div v-if="option.actived==true">
+                    <i :style="{'background-image':'url('+option.activeImg+')'}"></i>
+                    <span class="phoneTxt" :style="{color:model['activeColor']}">{{option.name}}</span>
+                </div>
+            </v-href>
+        </li>
+    </ul>
+    <div v-if="showBtns&&!app.isPreview" class="clearfix group-set newSetBtns" style="z-index:100">
+        <button class="textEdit-set  mgl0 set-btn fl" @click="editNav"  type="button">编辑底部</button>
+    </div>
+</div>

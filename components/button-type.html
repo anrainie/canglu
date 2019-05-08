@@ -1,0 +1,7 @@
+<v-cptborder :model="model" :setting="settingConfig" :editing="editingConfig">
+    <v-href :model="model">
+        <div @mouseover="hover" @mouseout="out">
+            <button :style="style" class="btnCpt">{{model.text}}</button>
+        </div>
+    </v-href>
+</v-cptborder>

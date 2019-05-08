@@ -1,0 +1,38 @@
+<div class="font-Attributes" style="margin-top: 10px;">
+    <span>{{config.text}}</span>
+    <el-radio-group v-model="model[key].isDefault" style="line-height: 40px">
+        <el-radio :label="false">默认</el-radio>
+        <el-radio :label="true">自定义</el-radio>
+    </el-radio-group>
+    <div class="btn-edit" v-show="model[key].isDefault">
+        <div class="button-type">
+            <em>
+                <ul class="btn-custom">
+                    <li class="clearfix" style="position: relative;padding-top: 10px">
+                        <span class="button-title">图片：</span>
+                        <div v-if="model[key]['backgroundImage'] ==''" class="def-img" @click="selectImage">
+                            <i class="el-icon-plus"></i>
+                            <p>添加图片</p>
+                            {{model[key]['background-image']}}
+                        </div>
+                        <div v-if="model[key]['backgroundImage'] !=''" class="addBtnBg positionR" @click="selectImage" v-loading="loading" :style="{'background-image':'url('+model[key]['backgroundImage']+')','background-repeat':model[key]['background-repeat'],'background-size':model[key]['background-size'],'background-position':model[key]['background-position']}">
+                            <div class="changeBg positionA" @click="selectImage">替换</div>
+                        </div>
+                        <i class="delIco positionA el-icon-close" v-if="model[key]['backgroundImage'] !=''" @click="delImg"></i>
+                    </li>
+                    <li>
+                        <span class="button-title">显示方式：</span>
+                        <el-radio class="radio-btn" v-for="item in config.showList" @change="choose" v-model="config.showStyle" :label="item.value">{{item.name}}</el-radio>
+                    </li>
+                </ul>
+            </em>
+            <em>
+                <div class="font-color-item" style="padding-bottom: 20px;">
+                    <span class="subtitle displayI">背景色&nbsp;:</span>
+                    <el-color-picker v-model="model[key]['background-color']" style="top: 16px;"></el-color-picker>
+                    <input type="text" v-model="model[key]['background-color']" class="lh30 fs14 vam colorS01 ">
+                </div>
+            </em>
+        </div>
+    </div>
+</div>

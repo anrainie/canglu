@@ -1,0 +1,15 @@
+<!--留言板按钮样式选择-->
+<div class="msg-border-btn clearfix">
+    <el-row>
+        <span class="btn-style-text">按钮样式：</span>
+        <div class="btn-content" v-if="app.channel == 1">
+            <ul class="line-list">
+                <div class="line-list-box" v-for="c in btnOpts" :class="{'cur-img':c == model[key]}">
+                    <li :class="c" ref="btnitem" @click="btnClass">
+                        提交留言
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </el-row>
+</div>

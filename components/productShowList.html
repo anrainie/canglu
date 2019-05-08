@@ -1,0 +1,197 @@
+<v-cptborder :model="model" :setting="settingConfig" :editing="editingConfig">
+    <!-- 纯文字-->
+    <el-row style="width: 100%;" v-if="model.type === 0">
+        <el-row>
+            <el-table :data="productList" style="width: 100%" @row-click="clickClumn">
+                <el-table-column prop="name1" label="名称" width="600px" min-width="360px"></el-table-column>
+                <el-table-column prop="marketPrice" label="价格" width="600px" min-width="360px"></el-table-column>
+            </el-table>
+        </el-row>
+        <div class="prolist-pagin-outer" v-if="model.showConfig.showPage === true"
+             style="position:relative;width:100%;height:40px;text-align: center;margin-top:20px;float:left;">
+            <el-pagination class="prolist-pagin-box" small layout="prev, pager, next" :page-size="capacity"
+                           :total="products.length"
+                           @current-change="function (e){currentPage=e-1;}">
+            </el-pagination>
+        </div>
+    </el-row>
+    <el-row style="padding:10px" v-if="model.type === 1">
+        <!-- 图文-->
+        <el-row>
+            <span style="margin-left: 10px;float:left;cursor: pointer;box-sizing: border-box;" v-for="p in productList"
+                  @click="showDetail(p)" :style="model.imageContainerStyle">
+                <div :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}" style="height:100%;">
+                    <v-hover-image :hoverEffect="model.hoverEffect" style="width: 180px;height: 180px"
+                                   :style="model.imageStyle"
+                                   :src="app.b2cImaSrc+p.masterImg"></v-hover-image>
+                    <div style="padding:5px;text-align: center">
+                        <el-row v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                            <span :style="c.style" v-if="(p[c.key]) != '' && (p[c.key]) != null">{{c.prefix}}{{p[c.key]}}</span>
+                        </el-row>
+                    </div>
+                </div>
+            </span>
+        </el-row>
+        <div v-if="model.showConfig.showPage === true" class="prolist-pagin-outer"
+             style="position:relative;width:100%;height:40px;text-align: center;margin-top:20px;float:left;left: 50%;transform: translateX(-50%);"
+             :style="{width:model.imageStyle.width}">
+            <el-pagination class="prolist-pagin-box" small layout="prev, pager, next" :page-size="capacity"
+                           :total="products.length"
+                           @current-change="function (e){currentPage=e-1;}">
+            </el-pagination>
+        </div>
+    </el-row>
+    <!-- 走马灯-->
+    <el-row v-if="model.type === 2">
+        <div class="block prolist-carousel">
+            <el-carousel style="" indicator-position="outside" arrow="never">
+                <el-carousel-item v-for="i in total" :key="i" :label="i" style="overflow:hidden">
+                    <span v-for="(p,x) in products" v-if="!model.showConfig.showPage||paging(i,x)"
+                          style="width: 180px;height: 300px;margin-left: 10px;float:left;cursor: pointer;"
+                          :style="model.imageContainerStyle" @click="showDetail(p)">
+
+                        <div :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}"
+                             style="height:100%;">
+                            <v-hover-image :hoverEffect="model.hoverEffect" @click="pictureClick"
+                                           style="width: 180px;height: 180px" :src="app.b2cImaSrc+p.masterImg"
+                                           :style="model.imageStyle"></v-hover-image>
+                            <div style="padding:5px;text-align: center">
+                                <div v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                                    <span :style="c.style" v-if="(p[c.key]) != '' && (p[c.key]) != null">{{c.prefix}}{{p[c.key]}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </el-carousel-item>
+            </el-carousel>
+        </div>
+    </el-row>
+    <!-- 箭头滚动展示-->
+    <div v-if="model.type === 3">
+        <div class="block prolist-carousel first-img-allshow">
+            <el-carousel height="310px" arrow="always">
+                <el-carousel-item v-for="i in total" :key="i" style="overflow:hidden">
+                    <span v-for="(p,x) in products" v-if="!model.showConfig.showPage||paging(i,x)"
+                          style="width: 180px;height: 310px;margin-left: 10px;float:left;cursor: pointer;"
+                          :style="model.imageContainerStyle" @click="showDetail(p)">
+
+                        <div :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}"
+                             style="height:100%;">
+                            <v-hover-image :hoverEffect="model.hoverEffect" @click="pictureClick"
+                                           style="width: 180px;height: 180px" :src="app.b2cImaSrc+p.masterImg"
+                                           :style="model.imageStyle"></v-hover-image>
+                            <div style="padding:5px;text-align: center">
+                                <div v-for="c in model.argShowConfig.columns" v-if="c.visible === true">
+                                    <span :style="c.style" v-if="(p[c.key]) != '' && (p[c.key]) != null">{{c.prefix}}{{p[c.key]}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </el-carousel-item>
+            </el-carousel>
+        </div>
+    </div>
+    <!-- 两列图文展示-->
+    <div v-if="model.type === 4" style="overflow: hidden;height:100%;">
+        <div class="clearfix">
+            <template v-for="p in productList" class="clearfix" style="position:relative;">
+                <el-col :span="12" class="clearfix" style="margin-bottom:20px;cursor: pointer;"
+                        :body-style="{ 'padding': '0 0 10px 0',height:'100%',width:'100%'}"
+                        @click.native="showDetail(p)" :style="{'margin-top':model.imageContainerStyle['margin-top']}">
+                    <el-row :gutter="20">
+                        <el-col :span="8" style="height: 180px;" @click="pictureClick"
+                                :style="{width:model.imageStyle.width}">
+                            <v-hover-image :hoverEffect="model.hoverEffect"
+                                           style="border:1px solid #ccc;width: 180px;height: 180px;display: inline-block"
+                                           :src="app.b2cImaSrc+p.masterImg" :style="model.imageStyle"></v-hover-image>
+                        </el-col>
+                        <el-col :span="16" style="height: 180px;">
+                            <span style="display: grid" v-for="c in model.argShowConfig.columns"
+                                  v-if="c.visible === true">
+                                <span :style="c.style" v-if="(p[c.key]) != '' && (p[c.key]) != null">{{c.prefix}}{{p[c.key]}}</span>
+                            </span>
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </template>
+        </div>
+        <div v-if="model.showConfig.showPage === true" class="prolist-pagin-outer"
+             style="position:relative;width:100%;height:40px;text-align: center;margin-top:20px;left:50%;">
+            <el-pagination class="prolist-pagin-box" small layout="prev, pager, next" :page-size="capacity"
+                           :total="products.length"
+                           @current-change="function (e){currentPage=e-1;}">
+            </el-pagination>
+        </div>
+    </div>
+    <!-- 首图全文展示-->
+    <div v-if="model.type === 5" style="overflow: auto;" class="first-img-allshow">
+        <el-row style="position: relative;cursor: pointer;" @click.native="showDetail(selectedPro)"
+                v-if="products.length">
+            <div style="float:left;position:relative;width: 96%;margin: 10px;margin-bottom:20px;"
+                 :body-style="{ 'padding': '0 0 0 0',height:'100%',width:'100%'}">
+                <el-row :gutter="30" style="height: 100%;margin: 0;">
+                    <el-col :span="6" style="height: 100%;padding: 0;" :style="model.imageStyle">
+                        <v-hover-image :hoverEffect="model.hoverEffect"
+                                       style="width: 100%;height: 100%;display: inline-block"
+                                       :src="app.b2cImaSrc+selectedPro.masterImg" v-if="products">
+                        </v-hover-image>
+                    </el-col>
+                    <el-row style="height: 100%;">
+                        <br>
+                        <el-row style="display: grid" v-for="c in model.argShowConfig.columns"
+                                v-if="c.visible === true">
+                            <span :style="c.style" v-if="(selectedPro[c.key]) != '' && (selectedPro[c.key]) != null">{{c.prefix}}{{selectedPro[c.key]}}</span>
+                        </el-row>
+                        <el-row style="display: grid;padding-right: 10px;">产品详情：{{selectedPro['summary']}}</el-row>
+                    </el-row>
+                </el-row>
+            </div>
+        </el-row>
+        <el-row>
+            <el-carousel height="80px" :autoplay="false" indicator-position="none" style='overflow: hidden'
+                         v-if="products.length">
+                <el-carousel-item v-for="i in customTotal(8)" :key="i">
+                    <el-row v-for="(p,x) in products" v-if="paging(i,x,8)" style="display: inline-block;font-size: 0">
+                        <v-hover-image :hoverEffect="model.hoverEffect" @click.native="setSelectedProduct(p)"
+                                       style="width: 75px;height: 75px;display: inline-block"
+                                       :src="app.b2cImaSrc+p.masterImg"
+                                       :style="selectedClass(p)" class="123">
+                        </v-hover-image>
+                        <span style=";height: 75px;display: inline-block" :style="{width:model.style.iMRight}"></span>
+                    </el-row>
+                </el-carousel-item>
+            </el-carousel>
+        </el-row>
+    </div>
+    <!-- 单列图文展示-->
+    <div v-if="model.type === 6" style=" height:100%;overflow: hidden;padding: 10px;position:relative">
+        <el-row style="position: relative;cursor: pointer;" v-for="p in productList" @click.native="showDetail(p)"
+                :style="{height:model.imageStyle.height,}">
+            <el-col style="float:left;position:relative;width: 96%;height: 200px;margin: 10px;"
+                    :body-style="{ 'padding': '0 0 0 0',height:'100%',width:'100%'}">
+                <el-row :gutter="30">
+                    <el-col :span="5" :style="model.imageStyle" style="padding:0;">
+                        <v-hover-image :hoverEffect="model.hoverEffect"
+                                       style="width: 100%;height: 100%;display: inline-block"
+                                       :src="app.b2cImaSrc+p.masterImg">
+                        </v-hover-image>
+                    </el-col>
+                    <el-col :span="19">
+                        <el-row style="display: grid" v-for="c in model.argShowConfig.columns"
+                                v-if="c.visible === true">
+                            <span :style="c.style" v-if="(p[c.key]) != '' && (p[c.key]) != null">{{c.prefix}}{{p[c.key]}}</span>
+                        </el-row>
+                        <el-row style="display: grid">产品详情：{{selectedPro['summary']}}</el-row>
+                    </el-col>
+                </el-row>
+            </el-col>
+        </el-row>
+        <div v-if="model.showConfig.showPage === true" class="prolist-pagin-outer"
+             style="position:relative;width:100%;height:40px;text-align: center;margin-top:20px;float:left;">
+            <el-pagination class="prolist-pagin-box" small layout="prev, pager, next" :page-size="capacity"
+                           :total="products.length"
+                           @current-change="function (e){currentPage=e-1;}">
+            </el-pagination>
+        </div>
+    </div>
+</v-cptborder>

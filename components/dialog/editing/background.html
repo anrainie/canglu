@@ -1,0 +1,33 @@
+<div class="bgAtt">
+    <div class="mt10">
+        <span class="">背景&nbsp;:</span>
+        <el-radio-group v-model="model.bgShow">
+            <el-radio :label="false"
+                      @change="resume(model.bgStyle)">默认
+            </el-radio>
+            <el-radio :label="true">自定义</el-radio>
+        </el-radio-group>
+    </div>
+    <div v-show="model.bgShow" class="ml30">
+        <div class="mt10">
+            <span class="subtitle displayI"></span>
+            <span class="self-subtitle">颜色&nbsp;:</span>
+            <el-color-picker v-model="model.bgStyle['background-color']" class="colorCenter"></el-color-picker>
+            <input type="text" v-model="model.bgStyle['background-color']"
+                   class="inputStyle lh30  fs14">
+        </div>
+        <div class="pic-item">
+            <span class="self-subtitle pic-text subtitle">图片&nbsp;:</span>
+            <div @click="selectImage" class="pic-add-box pointer"
+                 :style="{'background-image':model.bgStyle['background-image']}">
+                <p class="add-symbol fs40 alignC lh46">+</p>
+                <p class="add-text fs14 alignC">添加图片</p>
+            </div>
+            <el-row v-if="model.bgStyle['background-image']" style="height:40px;">
+                <el-button style="margin-top:5px;left:60px;position: absolute;" size="mini"
+                           type="danger" @click="clearImage">清空
+                </el-button>
+            </el-row>
+        </div>
+    </div>
+</div>
